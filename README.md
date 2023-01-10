@@ -28,6 +28,10 @@ For an example of a generated project you can lookt at [node-typescript-starter]
 - Github Action CI (`-g`)
 - Separate Dev/Prod config files (`-e`)
 
+### Analyzing your bundle
+
+With esbuild we can generate a `meta.json` file using the `npm run build:meta` or `npm run build:meta:prod` commands, which we can then can be uploaded to [Bundle Buddy](https://bundle-buddy.com/esbuild) to perform a detailed bundle analasys.
+
 ## More options
 
 ```
