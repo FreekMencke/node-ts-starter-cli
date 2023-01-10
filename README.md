@@ -9,11 +9,13 @@ Since I make a lot of projects, I created this **Node TS Starter CLI** to easily
 
 Getting started is as easy as running 1 command in your cli:
 
-- `npx node-ts-starter-cli create your-project-name -M`
+```
+npx node-ts-starter-cli create your-project-name -M
+```
 
 The command will generate your project in the `./your-project-name/` folder. 
 
-For an example of a generated project you can lookt at https://github.com/FreekMencke/node-typescript-starter.
+For an example of a generated project you can lookt at [node-typescript-starter](https://github.com/FreekMencke/node-typescript-starter).
 
 ## Features
 
@@ -25,6 +27,10 @@ For an example of a generated project you can lookt at https://github.com/FreekM
 - Docker support (`-d`)
 - Github Action CI (`-g`)
 - Separate Dev/Prod config files (`-e`)
+
+### Analyzing your bundle
+
+With esbuild we can generate a `meta.json` file using the `npm run build:meta` or `npm run build:meta:prod` commands, which we can then can be uploaded to [Bundle Buddy](https://bundle-buddy.com/esbuild) to perform a detailed bundle analasys.
 
 ## More options
 
