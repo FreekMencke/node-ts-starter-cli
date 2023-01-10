@@ -9,7 +9,9 @@ Since I make a lot of projects, I created this **Node TS Starter CLI** to easily
 
 Getting started is as easy as running 1 command in your cli:
 
-- `npx node-ts-starter-cli create your-project-name -M`
+```
+npx node-ts-starter-cli create your-project-name -M
+```
 
 The command will generate your project in the `./your-project-name/` folder. 
 
