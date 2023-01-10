@@ -1,4 +1,3 @@
-![CI](https://github.com/FreekMencke/node-typescript-starter/workflows/CI/badge.svg)
 [![GitHub issues](https://img.shields.io/github/issues/FreekMencke/node-typescript-starter.svg)](https://github.com/FreekMencke/node-typescript-starter/issues)
 [![GitHub license](https://img.shields.io/github/license/FreekMencke/node-typescript-starter.svg)](https://github.com/FreekMencke/node-typescript-starter/blob/master/LICENSE)
 
