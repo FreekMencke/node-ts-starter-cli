@@ -1,0 +1,62 @@
+#!/usr/bin/env node
+
+const yargs = require('yargs');
+
+const create = require('../src/create');
+
+console.log(); // start with blank line.
+
+yargs.scriptName('node-ts-starter-cli')
+  .wrap(Math.min(100, yargs.terminalWidth()))
+  .usage('$0 <cmd> [args]')
+  .strictCommands()
+  .demandCommand(1)
+  .command(
+    'create <name> [args]',
+    'Creates a new project.',
+    (yargs) => {
+      const creationOptions = [
+        ['docker','d', 'Adds support for Docker.'],
+        ['github-action', 'g', 'Adds Github Action CI.'],
+        ['eslint','l', 'Adds linting configuration.'],
+        ['environments','e', 'Adds support for config per environment.'],
+        ['commitizen', 'c', 'Adds commitizen for clean commits.'],
+      ];
+
+      yargs
+        .positional('name', {
+          default: 'node-typescript-starter',
+          describe: 'Project and folder name',
+          type: 'string',
+        }).option('minimal', {
+          alias: 'm',
+          desc: 'Project setup without any features and minimal code.',
+          type: 'boolean',
+          group: 'Creation options',
+          conflicts: [
+            ...creationOptions.map(([option]) => option),
+            'maximal',
+          ],
+        }).option('maximal', {
+          alias: 'M',
+          desc: 'Project setup with all features.',
+          type: 'boolean',
+          group: 'Creation options',
+          conflicts: [
+            ...creationOptions.map(([option]) => option),
+            'minimal',
+          ],
+        });
+
+      creationOptions.reduce((yargs, [name, alias, desc]) => yargs.option(name, {
+        alias,
+        desc,
+        type: 'boolean',
+        group: 'Creation options',
+      }), yargs);
+    },
+    (argv) => create(argv),
+  )
+  .help()
+  .parse();
+

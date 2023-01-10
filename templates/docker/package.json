@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "build:docker": "docker build --rm -t $npm_package_name:latest .",
+    "deploy:docker": "sh ./scripts/deploy.sh"
+  }
+}
