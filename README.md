@@ -1,7 +1,7 @@
-[![NPM package](https://img.shields.io/npm/v/node-ts-starter-cli.svg?logo=npm&logoColor=fff&label=NPM+package&color=limegreen)](https://www.npmjs.com/package/node-ts-starter-cli)
+[![NPM package](https://img.shields.io/npm/v/node-ts-starter-cli.svg)](https://www.npmjs.com/package/node-ts-starter-cli)
 [![GitHub issues](https://img.shields.io/github/issues/FreekMencke/node-ts-starter-cli.svg)](https://github.com/FreekMencke/node-ts-starter-cli/issues)
 [![GitHub license](https://img.shields.io/github/license/FreekMencke/node-ts-starter-cli.svg)](https://github.com/FreekMencke/node-ts-starter-cli/blob/master/LICENSE)
-https://img.shields.io/npm/v/create-nodejs-ts.svg?logo=npm&logoColor=fff&label=NPM+package&color=limegreen
+
 # Node TS Starter CLI
 
 Since I make a lot of projects, I created this **Node TS Starter CLI** to easily create a new Node project with TypeScript.
