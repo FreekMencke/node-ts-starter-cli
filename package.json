@@ -10,7 +10,9 @@
   "license": "MIT",
   "scripts": {
     "cz": "git cz",
-    "lint": "eslint . -c .eslintrc.js"
+    "lint": "eslint . -c .eslintrc.js",
+    "version:dev": "npm version prerelease --preid=dev",
+    "publish:dev": "npm publish -tag=dev"
   },
   "bin": "./bin/node-ts-starter-cli",
   "dependencies": {
