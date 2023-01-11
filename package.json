@@ -5,7 +5,7 @@
   "homepage": "https://github.com/FreekMencke",
   "repository": {
     "type": "git",
-    "url": "https://github.com/FreekMencke/node-typescript-starter"
+    "url": "https://github.com/FreekMencke/node-ts-starter-cli"
   },
   "license": "MIT",
   "scripts": {
@@ -27,5 +27,16 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  }
+  },
+  "keywords": [
+    "cli",
+    "node",
+    "nodejs",
+    "ts",
+    "typescript",
+    "boilerplate",
+    "generator",
+    "starter",
+    "template"
+  ]
 }
