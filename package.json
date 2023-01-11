@@ -9,6 +9,7 @@
   },
   "license": "MIT",
   "scripts": {
+    "cz": "git cz",
     "lint": "eslint . -c .eslintrc.js"
   },
   "bin": "./bin/node-ts-starter-cli",
