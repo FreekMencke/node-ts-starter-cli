@@ -25,7 +25,6 @@ yargs.scriptName('node-ts-starter-cli')
 
       yargs
         .positional('name', {
-          default: 'node-typescript-starter',
           describe: 'Project and folder name',
           type: 'string',
         }).option('minimal', {
