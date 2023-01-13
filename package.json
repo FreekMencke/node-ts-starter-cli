@@ -13,7 +13,9 @@
   "scripts": {
     "cz": "git cz",
     "lint": "eslint . -c .eslintrc.js",
-    "version:dev": "npm version prerelease --preid=dev",
+    "version:dev:patch": "npm version prepatch --preid=dev",
+    "version:dev:minor": "npm version preminor --preid=dev",
+    "version:dev:major": "npm version premajor --preid=dev",
     "publish:dev": "npm publish -tag=dev"
   },
   "dependencies": {
