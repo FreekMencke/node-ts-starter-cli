@@ -1,23 +1,14 @@
 module.exports = {
   env: {
-    browser: true,
-    commonjs: true,
-    es2021: true,
+    es2022: true,
+    node: true,
   },
-  overrides: [
-  ],
   parserOptions: {
     ecmaVersion: 'latest',
   },
   rules: {
     'indent': ['error', 2],
-    'quotes': [
-      'error',
-      'single',
-      {
-        avoidEscape: true,
-      },
-    ],
+    'quotes': ['error', 'single', { avoidEscape: true }],
     'comma-dangle': ['error', 'always-multiline'],
     'no-multiple-empty-lines': ['error', { max: 1 }],
     'no-redeclare': 'error',

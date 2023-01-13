@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node ./build/esbuild.js --dev --watch --run",
     "start:prod": "node ./build/esbuild.js --watch --run",
+    "start:ci": "node ./build/esbuild.js --run",
     "build": "node ./build/esbuild.js --dev",
     "build:prod": "node ./build/esbuild.js",
     "build:meta": "node ./build/esbuild.js --dev --meta",
