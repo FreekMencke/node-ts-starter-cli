@@ -1,4 +1,5 @@
 [![NPM package](https://img.shields.io/npm/v/node-ts-starter-cli.svg)](https://www.npmjs.com/package/node-ts-starter-cli)
+[![CI](https://github.com/FreekMencke/node-ts-starter-cli/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/FreekMencke/node-ts-starter-cli/actions/workflows/main.yml)
 [![GitHub issues](https://img.shields.io/github/issues/FreekMencke/node-ts-starter-cli.svg)](https://github.com/FreekMencke/node-ts-starter-cli/issues)
 [![GitHub license](https://img.shields.io/github/license/FreekMencke/node-ts-starter-cli.svg)](https://github.com/FreekMencke/node-ts-starter-cli/blob/master/LICENSE)
 
