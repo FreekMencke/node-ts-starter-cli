@@ -9,7 +9,6 @@ import { fileURLToPath } from 'url';
 import { promisify } from 'util';
 
 async function importJSON(path) {
-  // eslint-disable-next-line
   return JSON.parse(await readFile(new URL(path, import.meta.url)));
 }
 
