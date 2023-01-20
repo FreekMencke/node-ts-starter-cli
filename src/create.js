@@ -22,12 +22,12 @@ export async function createProject(argv) {
   // Create folder for project
   spinner.start('Creating folder...');
   await mkdir(projectFolder);
-  spinner.succeed('Created folder.')
+  spinner.succeed('Created folder.');
 
   // Copy project base to folder
   spinner.start('Generating root files...');
   await copy(path.join(packageFolder, 'templates/base'), projectFolder);
-  spinner.succeed('Generated root files.')
+  spinner.succeed('Generated root files.');
 
   // load package.json template, and modify it as we go.
   let packageJson = {
@@ -44,14 +44,14 @@ export async function createProject(argv) {
   })();
   await copy(path.join(packageFolder, `templates/build/${buildSrcTemplate}`), path.join(projectFolder, 'build'));
   await copy(path.join(packageFolder, `templates/src/${buildSrcTemplate}`), path.join(projectFolder, 'src'));
-  spinner.succeed('Generated project files')
+  spinner.succeed('Generated project files');
 
   // copy linting files & package.json
   if (argv.maximal || argv.eslint) {
     spinner.start('Adding linting...');
     await copy(path.join(packageFolder, 'templates/eslint/default'), projectFolder);
     packageJson = merge(packageJson, await importJSON('../templates/eslint/package.json'));
-    spinner.succeed('Added linting.')
+    spinner.succeed('Added linting.');
   }
 
   // copy docker files && package.json
@@ -63,7 +63,7 @@ export async function createProject(argv) {
       await copy(path.join(packageFolder, 'templates/docker/default'), projectFolder);
     }
     packageJson = merge(packageJson, await importJSON('../templates/docker/package.json'));
-    spinner.succeed('Added Docker.')
+    spinner.succeed('Added Docker.');
   }
 
   // copy github-action files && package.json
@@ -75,14 +75,14 @@ export async function createProject(argv) {
       return 'default';
     })();
     await copy(path.join(packageFolder, `templates/github-action/${githubActionTemplate}`), path.join(projectFolder, '.github/workflows'));
-    spinner.succeed('Added github-action.')
+    spinner.succeed('Added github-action.');
   }
 
   // copy cz package.json
   if (argv.maximal || argv.commitizen) {
     spinner.start('Adding commitizen...');
     packageJson = merge(packageJson, await importJSON('../templates/commitizen/package.json'));
-    spinner.succeed('Added commitizen.')
+    spinner.succeed('Added commitizen.');
   }
 
   // Write our modified package.json template to our project folder
@@ -91,11 +91,11 @@ export async function createProject(argv) {
     path.join(projectFolder, 'package.json'),
     JSON.stringify(sortPackageJson(packageJson), null, 2).replaceAll(/\$npm_package_name/g, packageJson.name),
   );
-  spinner.succeed('Generated package.json')
+  spinner.succeed('Generated package.json');
 
   // initialize git repo
   spinner.start('Initializing git repository...');
-  const { stdout } = await promisify(exec)('git init', { cwd: projectFolder })
+  const { stdout } = await promisify(exec)('git init', { cwd: projectFolder });
   spinner.succeed(stdout.replace(/\n$/, ''));
 
   // finally do an `npm i`

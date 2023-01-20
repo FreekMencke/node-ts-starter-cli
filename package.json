@@ -26,7 +26,7 @@
   },
   "scripts": {
     "cz": "git cz",
-    "lint": "eslint . -c .eslintrc.js",
+    "lint": "eslint . -c .eslintrc",
     "publish:dev": "npm publish -tag=dev",
     "version:dev": "npm version prerelease --preid=dev",
     "version:dev:major": "npm version premajor --preid=dev",
