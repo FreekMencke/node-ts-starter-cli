@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 
-const yargs = require('yargs');
+import yargs from 'yargs';
+import { createProject } from '../src/create.js';
 
-const create = require('../src/create');
+const yargsInstance = yargs(process.argv.slice(2));
 
-console.log(); // start with blank line.
-
-yargs.scriptName('node-ts-starter-cli')
-  .wrap(Math.min(100, yargs.terminalWidth()))
-  .usage('$0 <cmd> [args]')
+yargsInstance.scriptName('node-ts-starter-cli.js')
+  .wrap(Math.min(100, yargsInstance.terminalWidth()))
+  .usage('$0 <cmd>')
   .strictCommands()
   .demandCommand(1)
   .command(
@@ -54,8 +53,8 @@ yargs.scriptName('node-ts-starter-cli')
         group: 'Creation options',
       }), yargs);
     },
-    (argv) => create(argv),
+    (argv) => createProject(argv),
   )
   .help()
-  .parse();
+  .argv;
 

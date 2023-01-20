@@ -2,37 +2,6 @@
   "name": "node-ts-starter-cli",
   "version": "0.1.0-dev.0",
   "description": "Generate new NodeJS projects with TypeScript and esbuild.",
-  "author": "Freek Mencke",
-  "license": "MIT",
-  "homepage": "https://github.com/FreekMencke/node-ts-starter-cli#readme",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/FreekMencke/node-ts-starter-cli.git"
-  },
-  "bin": "./bin/node-ts-starter-cli",
-  "scripts": {
-    "cz": "git cz",
-    "lint": "eslint . -c .eslintrc.js",
-    "version:dev:patch": "npm version prepatch --preid=dev",
-    "version:dev:minor": "npm version preminor --preid=dev",
-    "version:dev:major": "npm version premajor --preid=dev",
-    "publish:dev": "npm publish -tag=dev"
-  },
-  "dependencies": {
-    "fs-extra": "^11.1.0",
-    "lodash.merge": "^4.6.2",
-    "yargs": "^17.6.2"
-  },
-  "devDependencies": {
-    "commitizen": "^4.2.6",
-    "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^8.31.0"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
   "keywords": [
     "cli",
     "node",
@@ -43,5 +12,44 @@
     "generator",
     "starter",
     "template"
-  ]
+  ],
+  "homepage": "https://github.com/FreekMencke/node-ts-starter-cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FreekMencke/node-ts-starter-cli.git"
+  },
+  "license": "MIT",
+  "author": "Freek Mencke",
+  "type": "module",
+  "bin": {
+    "node-ts-starter-cli": "./bin/node-ts-starter-cli.js"
+  },
+  "scripts": {
+    "cz": "git cz",
+    "lint": "eslint . -c .eslintrc.js",
+    "publish:dev": "npm publish -tag=dev",
+    "version:dev:major": "npm version premajor --preid=dev",
+    "version:dev:minor": "npm version preminor --preid=dev",
+    "version:dev:patch": "npm version prepatch --preid=dev"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "fs-extra": "^11.1.0",
+    "lodash.merge": "^4.6.2",
+    "ora": "^6.1.2",
+    "sort-package-json": "^2.1.0",
+    "yargs": "^17.6.2"
+  },
+  "devDependencies": {
+    "commitizen": "^4.2.6",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.31.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }
