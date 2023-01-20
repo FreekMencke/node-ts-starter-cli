@@ -1,6 +1,6 @@
 {
   "name": "node-ts-starter-cli",
-  "version": "0.1.0-dev.0",
+  "version": "0.1.0-dev.1",
   "description": "Generate new NodeJS projects with TypeScript and esbuild.",
   "keywords": [
     "cli",
@@ -28,6 +28,7 @@
     "cz": "git cz",
     "lint": "eslint . -c .eslintrc.js",
     "publish:dev": "npm publish -tag=dev",
+    "version:dev": "npm version prerelease --preid=dev",
     "version:dev:major": "npm version premajor --preid=dev",
     "version:dev:minor": "npm version preminor --preid=dev",
     "version:dev:patch": "npm version prepatch --preid=dev"
