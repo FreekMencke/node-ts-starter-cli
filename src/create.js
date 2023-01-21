@@ -1,23 +1,20 @@
 import { exec } from 'child_process';
-import { copy } from 'fs-extra';
-import { mkdir, readFile, writeFile } from 'fs/promises';
+import { mkdir, writeFile } from 'fs/promises';
 import merge from 'lodash.merge';
 import ora from 'ora';
-import path, { dirname } from 'path';
+import { dirname, join, resolve } from 'path';
 import sortPackageJson from 'sort-package-json';
 import { fileURLToPath } from 'url';
 import { promisify } from 'util';
-
-async function importJSON(path) {
-  return JSON.parse(await readFile(new URL(path, import.meta.url)));
-}
+import { copyTemplate } from './utils/copy.js';
+import { importJSON } from './utils/json.js';
 
 export async function createProject(argv) {
-  const packageFolder = path.join(dirname(fileURLToPath(import.meta.url)), '..');
-  const projectFolder = path.join(process.cwd(), argv.name);
+  const templateFolder = join(dirname(fileURLToPath(import.meta.url)), '../templates');
+  const projectFolder = resolve(process.cwd(), argv.name);
 
   console.log(`\nGenerating new project with name "${argv.name}"...\n`);
-  const spinner = ora({ stream: process.stdout });
+  const spinner = ora();
 
   // Create folder for project
   spinner.start('Creating folder...');
@@ -26,12 +23,12 @@ export async function createProject(argv) {
 
   // Copy project base to folder
   spinner.start('Generating root files...');
-  await copy(path.join(packageFolder, 'templates/base'), projectFolder);
+  await copyTemplate(templateFolder, 'base', projectFolder);
   spinner.succeed('Generated root files.');
 
   // load package.json template, and modify it as we go.
   let packageJson = {
-    ...await importJSON('../templates/package.json'),
+    ...await importJSON(new URL('../templates/package.json', import.meta.url)),
     name: argv.name,
   };
 
@@ -42,27 +39,26 @@ export async function createProject(argv) {
     if (argv.maximal || argv.environments) return 'environments';
     return 'default';
   })();
-  await copy(path.join(packageFolder, `templates/build/${buildSrcTemplate}`), path.join(projectFolder, 'build'));
-  await copy(path.join(packageFolder, `templates/src/${buildSrcTemplate}`), path.join(projectFolder, 'src'));
+  await Promise.all([
+    await copyTemplate(templateFolder, `build/${buildSrcTemplate}`, join(projectFolder, 'build')),
+    await copyTemplate(templateFolder, `src/${buildSrcTemplate}`, join(projectFolder, 'src')),
+  ]);
   spinner.succeed('Generated project files');
 
   // copy linting files & package.json
   if (argv.maximal || argv.eslint) {
     spinner.start('Adding linting...');
-    await copy(path.join(packageFolder, 'templates/eslint/default'), projectFolder);
-    packageJson = merge(packageJson, await importJSON('../templates/eslint/package.json'));
+    await copyTemplate(templateFolder, 'eslint/default', projectFolder);
+    packageJson = merge(packageJson, await importJSON(new URL('../templates/eslint/package.json'), import.meta.url));
     spinner.succeed('Added linting.');
   }
 
   // copy docker files && package.json
   if (argv.maximal || argv.docker) {
     spinner.start('Adding Docker...');
-    if (argv.maximal || argv.eslint) {
-      await copy(path.join(packageFolder, 'templates/docker/eslint'), projectFolder);
-    } else {
-      await copy(path.join(packageFolder, 'templates/docker/default'), projectFolder);
-    }
-    packageJson = merge(packageJson, await importJSON('../templates/docker/package.json'));
+    if (argv.maximal || argv.eslint) await copyTemplate(templateFolder, 'docker/eslint', projectFolder);
+    else await copyTemplate(templateFolder, 'docker/default', projectFolder);
+    packageJson = merge(packageJson, await importJSON(new URL('../templates/docker/package.json'), import.meta.url));
     spinner.succeed('Added Docker.');
   }
 
@@ -74,21 +70,21 @@ export async function createProject(argv) {
       if (argv.eslint) return 'eslint';
       return 'default';
     })();
-    await copy(path.join(packageFolder, `templates/github-action/${githubActionTemplate}`), path.join(projectFolder, '.github/workflows'));
+    await copyTemplate(templateFolder, `github-action/${githubActionTemplate}`, join(projectFolder, '.github/workflows'));
     spinner.succeed('Added github-action.');
   }
 
   // copy cz package.json
   if (argv.maximal || argv.commitizen) {
     spinner.start('Adding commitizen...');
-    packageJson = merge(packageJson, await importJSON('../templates/commitizen/package.json'));
+    packageJson = merge(packageJson, await importJSON(new URL('../templates/commitizen/package.json'), import.meta.url));
     spinner.succeed('Added commitizen.');
   }
 
   // Write our modified package.json template to our project folder
   spinner.start('Generating package.json...');
   await writeFile(
-    path.join(projectFolder, 'package.json'),
+    join(projectFolder, 'package.json'),
     JSON.stringify(sortPackageJson(packageJson), null, 2).replaceAll(/\$npm_package_name/g, packageJson.name),
   );
   spinner.succeed('Generated package.json');
