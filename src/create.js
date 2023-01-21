@@ -49,7 +49,7 @@ export async function createProject(argv) {
   if (argv.maximal || argv.eslint) {
     spinner.start('Adding linting...');
     await copyTemplate(templateFolder, 'eslint/default', projectFolder);
-    packageJson = merge(packageJson, await importJSON(new URL('../templates/eslint/package.json'), import.meta.url));
+    packageJson = merge(packageJson, await importJSON(new URL('../templates/eslint/package.json', import.meta.url)));
     spinner.succeed('Added linting.');
   }
 
@@ -58,7 +58,7 @@ export async function createProject(argv) {
     spinner.start('Adding Docker...');
     if (argv.maximal || argv.eslint) await copyTemplate(templateFolder, 'docker/eslint', projectFolder);
     else await copyTemplate(templateFolder, 'docker/default', projectFolder);
-    packageJson = merge(packageJson, await importJSON(new URL('../templates/docker/package.json'), import.meta.url));
+    packageJson = merge(packageJson, await importJSON(new URL('../templates/docker/package.json', import.meta.url)));
     spinner.succeed('Added Docker.');
   }
 
@@ -77,7 +77,7 @@ export async function createProject(argv) {
   // copy cz package.json
   if (argv.maximal || argv.commitizen) {
     spinner.start('Adding commitizen...');
-    packageJson = merge(packageJson, await importJSON(new URL('../templates/commitizen/package.json'), import.meta.url));
+    packageJson = merge(packageJson, await importJSON(new URL('../templates/commitizen/package.json', import.meta.url)));
     spinner.succeed('Added commitizen.');
   }
 
