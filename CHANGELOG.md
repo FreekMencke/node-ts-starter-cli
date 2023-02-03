@@ -17,7 +17,6 @@ Created `CHANGELOG.md`.
 - Added `start:ci` command so we can run without a `--watch`.
 
 ### Base
-# TODO TEST THIS
 - upped `tsconfig.json` to `es2022`
 - added `useDefineForClassFields: false`.
 
