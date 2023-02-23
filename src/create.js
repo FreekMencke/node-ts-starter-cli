@@ -140,7 +140,7 @@ export async function createProject(argv) {
 
   await writeFile(
     join(projectFolder, 'package.json'),
-    JSON.stringify(sortPackageJson(packageJson), null, 2).replaceAll(/\$npm_package_name/g, packageJson.name),
+    JSON.stringify(sortPackageJson(packageJson), null, 2).replaceAll(/\$npm_package_name/g, packageJson.name) + '\n', // \n required for prettier
   );
   spinner.succeed('Generated package.json');
 
