@@ -28,6 +28,7 @@ For an example of a generated project you can look at
 - EditorConfig
 - Commitizen (`-c`)
 - ESLint (`-l`)
+- Prettier (`-p`)
 - Docker support (`-d`)
 - Github Action CI (`-g`)
 - Separate Dev/Prod config files (`-e`)
@@ -58,6 +59,7 @@ Creation options
   -l, --eslint         Adds linting configuration.                                         [boolean]
   -e, --environments   Adds support for config per environment.                            [boolean]
   -c, --commitizen     Adds commitizen for clean commits.                                  [boolean]
+  -p, --prettier       Adds prettier configuration.                                        [boolean]
 
 Options:
       --version  Show version number                                                       [boolean]
