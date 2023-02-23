@@ -27,6 +27,8 @@
   "scripts": {
     "cz": "git cz",
     "lint": "eslint . -c .eslintrc",
+    "prettier": "prettier --write .",
+    "prettier:ci": "prettier --check .",
     "publish:dev": "npm publish -tag=dev",
     "version:dev": "npm version prerelease --preid=dev",
     "version:dev:major": "npm version premajor --preid=dev",
@@ -38,17 +40,20 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
+  "prettier": "./.prettierrc.json",
   "dependencies": {
     "fs-extra": "^11.1.0",
     "lodash.merge": "^4.6.2",
     "ora": "^6.1.2",
-    "sort-package-json": "^2.1.0",
-    "yargs": "^17.6.2"
+    "sort-package-json": "^2.4.1",
+    "yargs": "^17.7.1"
   },
   "devDependencies": {
-    "commitizen": "^4.2.6",
+    "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^8.31.0"
+    "eslint": "^8.34.0",
+    "eslint-config-prettier": "^8.6.0",
+    "prettier": "^2.8.4"
   },
   "engines": {
     "node": ">=18.0.0"

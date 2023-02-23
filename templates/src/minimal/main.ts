@@ -1,1 +1,1 @@
-console.log('Generated using node-ts-starter-cli.')
+console.log('Generated using node-ts-starter-cli.');

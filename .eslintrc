@@ -1,4 +1,5 @@
 {
+  "extends": ["prettier"],
   "env": {
     "es2022": true,
     "node": true

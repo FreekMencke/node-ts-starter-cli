@@ -1,0 +1,10 @@
+{
+  "prettier": "./.prettierrc.json",
+  "scripts": {
+    "prettier": "prettier --write .",
+    "prettier:ci": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^2.8.4"
+  }
+}

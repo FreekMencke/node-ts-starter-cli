@@ -13,9 +13,9 @@
   },
   "devDependencies": {
     "@es-exec/esbuild-plugin-start": "^0.0.4",
-    "@types/node": "^18.11.18",
-    "esbuild": "^0.16.16",
-    "minimist": "^1.2.7",
-    "typescript": "^4.9.4"
+    "@types/node": "^18.14.1",
+    "esbuild": "^0.17.10",
+    "minimist": "^1.2.8",
+    "typescript": "^4.9.5"
   }
 }

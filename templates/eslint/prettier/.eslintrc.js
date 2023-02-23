@@ -9,6 +9,7 @@ module.exports = {
     project: ['tsconfig.json', 'tsconfig.eslint.json'],
     sourceType: 'module',
   },
+  extends: ['prettier'],
   plugins: ['@typescript-eslint'],
   rules: {
     '@typescript-eslint/indent': ['error', 2],

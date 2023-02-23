@@ -34,8 +34,6 @@ const config = {
 
 if (argv.run) config.plugins.push(require('@es-exec/esbuild-plugin-start').default({ script: 'node dist/main.js' }));
 
-esbuild
-  .build(config)
-  .then(file => {
-    if (argv.meta) require('fs').writeFileSync('dist/meta.json', JSON.stringify(file.metafile));
-  });
+esbuild.build(config).then((file) => {
+  if (argv.meta) require('fs').writeFileSync('dist/meta.json', JSON.stringify(file.metafile));
+});

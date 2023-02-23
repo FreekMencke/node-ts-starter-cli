@@ -5,7 +5,8 @@
 
 # Node TS Starter CLI
 
-The Node TS Starter CLI is a command-line tool that helps developers quickly set up a new Node.js project with TypeScript. It offers a variety of features such as strict TypeScript configuration, esbuild, EditorConfig, and support for Docker, Github Action CI, linting, and config per environment.
+Since I make a lot of projects, I created this **Node TS Starter CLI** to easily create a new Node project with
+TypeScript.
 
 ## Getting started
 
@@ -15,7 +16,10 @@ To get started with the Node TS Starter CLI, simply run the following command in
 npx node-ts-starter-cli create your-project-name -M
 ```
 
-This command will generate a new project in the `./your-project-name/` folder. You can find an example of a generated project in the [node-typescript-starter](https://github.com/FreekMencke/node-typescript-starter) repository.
+The command will generate your project in the `./your-project-name/` folder.
+
+For an example of a generated project you can look at
+[node-typescript-starter](https://github.com/FreekMencke/node-typescript-starter).
 
 ## Features
 
@@ -30,11 +34,13 @@ This command will generate a new project in the `./your-project-name/` folder. Y
 
 ### Analyzing your bundle
 
-The Node TS Starter CLI also includes commands that will generate a meta.json file (`npm run build:meta` or `npm run build:meta:prod`). This file can be uploaded to [Bundle Buddy](https://bundle-buddy.com/esbuild) to perform a detailed bundle analasys.
+With esbuild we can generate a `meta.json` file using the `npm run build:meta` or `npm run build:meta:prod` commands,
+which we can then can be uploaded to [Bundle Buddy](https://bundle-buddy.com/esbuild) to perform a detailed bundle
+analasys.
 
-### More options
-
-The Node TS Starter CLI offers additional options such as `--minimal` and `--maximal` for a minimal or maximal project setup, as well as options for linting, Docker support, and config per environment. You can find a full list of options by running `node-ts-starter-cli create --help`.
+The Node TS Starter CLI offers additional options such as `--minimal` and `--maximal` for a minimal or maximal project
+setup, as well as options for linting, Docker support, and config per environment. You can find a full list of options
+by running `node-ts-starter-cli create --help`.
 
 ```
 node-ts-starter-cli create <name> [args]
@@ -60,4 +66,5 @@ Options:
 
 ## Support
 
-If you have any issues or questions, please feel free to open a [GitHub issue](https://github.com/FreekMencke/node-ts-starter-cli/issues).
+If you have any issues or questions, please feel free to open a
+[GitHub issue](https://github.com/FreekMencke/node-ts-starter-cli/issues).

@@ -28,61 +28,116 @@ export async function createProject(argv) {
 
   // load package.json template, and modify it as we go.
   let packageJson = {
-    ...await importJSON(new URL('../templates/package.json', import.meta.url)),
+    ...(await importJSON(new URL('../templates/template-package.json', import.meta.url))),
     name: argv.name,
   };
 
   // copy build and source files
   spinner.start('Generating project files...');
+
   const buildSrcTemplate = (() => {
     if (argv.minimal) return 'minimal';
     if (argv.maximal || argv.environments) return 'environments';
     return 'default';
   })();
+
   await Promise.all([
     await copyTemplate(templateFolder, `build/${buildSrcTemplate}`, join(projectFolder, 'build')),
     await copyTemplate(templateFolder, `src/${buildSrcTemplate}`, join(projectFolder, 'src')),
   ]);
   spinner.succeed('Generated project files');
 
-  // copy linting files & package.json
+  // copy linting files & template-package.json
   if (argv.maximal || argv.eslint) {
     spinner.start('Adding linting...');
-    await copyTemplate(templateFolder, 'eslint/default', projectFolder);
-    packageJson = merge(packageJson, await importJSON(new URL('../templates/eslint/package.json', import.meta.url)));
+
+    await copyTemplate(
+      templateFolder,
+      argv.maximal || argv.prettier ? 'eslint/prettier' : 'eslint/default',
+      projectFolder,
+    );
+
+    packageJson = merge(
+      packageJson,
+      await importJSON(
+        new URL(
+          `../templates/eslint/${argv.maximal || argv.prettier ? 'prettier-' : ''}template-package.json`,
+          import.meta.url,
+        ),
+      ),
+    );
     spinner.succeed('Added linting.');
   }
 
-  // copy docker files && package.json
+  // copy linting files & template-package.json
+  if (argv.maximal || argv.prettier) {
+    spinner.start('Adding prettier...');
+
+    await copyTemplate(templateFolder, 'prettier/default', projectFolder);
+
+    packageJson = merge(
+      packageJson,
+      await importJSON(new URL('../templates/prettier/template-package.json', import.meta.url)),
+    );
+    spinner.succeed('Added prettier.');
+  }
+
+  // copy docker files && template-package.json
   if (argv.maximal || argv.docker) {
     spinner.start('Adding Docker...');
-    if (argv.maximal || argv.eslint) await copyTemplate(templateFolder, 'docker/eslint', projectFolder);
+
+    if (argv.maximal || (argv.eslint && argv.prettier))
+      await copyTemplate(templateFolder, 'docker/prettier-eslint', projectFolder);
+    else if (argv.eslint) await copyTemplate(templateFolder, 'docker/eslint', projectFolder);
+    else if (argv.prettier) await copyTemplate(templateFolder, 'docker/prettier', projectFolder);
     else await copyTemplate(templateFolder, 'docker/default', projectFolder);
-    packageJson = merge(packageJson, await importJSON(new URL('../templates/docker/package.json', import.meta.url)));
+
+    packageJson = merge(
+      packageJson,
+      await importJSON(new URL('../templates/docker/template-package.json', import.meta.url)),
+    );
     spinner.succeed('Added Docker.');
   }
 
-  // copy github-action files && package.json
+  // copy github-action files
   if (argv.maximal || argv.githubAction) {
     spinner.start('Adding github-action...');
+
+    if (argv.maximal || (argv.eslint && argv.prettier))
+      await copyTemplate(templateFolder, 'docker/prettier-eslint', projectFolder);
+    else if (argv.eslint) await copyTemplate(templateFolder, 'docker/eslint', projectFolder);
+    else if (argv.prettier) await copyTemplate(templateFolder, 'docker/prettier', projectFolder);
+
     const githubActionTemplate = (() => {
       if (argv.maximal || argv.docker) return 'docker';
+      if (argv.eslint && argv.prettier) return 'prettier-eslint';
       if (argv.eslint) return 'eslint';
+      if (argv.prettier) return 'prettier';
       return 'default';
     })();
-    await copyTemplate(templateFolder, `github-action/${githubActionTemplate}`, join(projectFolder, '.github/workflows'));
+
+    await copyTemplate(
+      templateFolder,
+      `github-action/${githubActionTemplate}`,
+      join(projectFolder, '.github/workflows'),
+    );
     spinner.succeed('Added github-action.');
   }
 
-  // copy cz package.json
+  // copy commitizen template-package.json
   if (argv.maximal || argv.commitizen) {
     spinner.start('Adding commitizen...');
-    packageJson = merge(packageJson, await importJSON(new URL('../templates/commitizen/package.json', import.meta.url)));
+
+    packageJson = merge(
+      packageJson,
+      await importJSON(new URL('../templates/commitizen/template-package.json', import.meta.url)),
+    );
     spinner.succeed('Added commitizen.');
   }
 
   // Write our modified package.json template to our project folder
   spinner.start('Generating package.json...');
+
   await writeFile(
     join(projectFolder, 'package.json'),
     JSON.stringify(sortPackageJson(packageJson), null, 2).replaceAll(/\$npm_package_name/g, packageJson.name),
@@ -100,4 +155,4 @@ export async function createProject(argv) {
   spinner.succeed('Installed dependencies.');
 
   console.log('\nFinished generating project!');
-};
+}
