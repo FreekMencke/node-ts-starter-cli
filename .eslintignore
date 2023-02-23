@@ -2,4 +2,5 @@ dist
 node_modules
 .vscode
 
-templates/eslint
+/example/
+/templates/eslint
