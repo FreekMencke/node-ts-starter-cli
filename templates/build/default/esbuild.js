@@ -25,7 +25,6 @@ const config = {
     DEVELOP: JSON.stringify(!!argv.dev),
   },
 
-  watch: argv.watch,
   plugins: [],
 
   metafile: argv.meta,
@@ -34,6 +33,13 @@ const config = {
 
 if (argv.run) config.plugins.push(require('@es-exec/esbuild-plugin-start').default({ script: 'node dist/main.js' }));
 
-esbuild.build(config).then((file) => {
-  if (argv.meta) require('fs').writeFileSync('dist/meta.json', JSON.stringify(file.metafile));
-});
+if (argv.watch) {
+  (async () => {
+    const ctx = await esbuild.context(config);
+    await ctx.watch();
+  })();
+} else {
+  esbuild.build(config).then((file) => {
+    if (argv.meta) require('fs').writeFileSync('dist/meta.json', JSON.stringify(file.metafile));
+  });
+}

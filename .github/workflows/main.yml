@@ -30,8 +30,11 @@ jobs:
 
       - run: npm ci
       - run: npm run lint
+      - run: npm run prettier:ci
       - run: ./bin/node-ts-starter-cli.js create dist -M
       - run: npm run lint
+        working-directory: ./dist
+      - run: npm run prettier:ci
         working-directory: ./dist
       - run: npm run start:ci
         working-directory: ./dist
