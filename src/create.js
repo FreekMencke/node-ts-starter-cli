@@ -1,5 +1,5 @@
 import { exec } from 'child_process';
-import { mkdir, writeFile } from 'fs/promises';
+import { mkdir, readFile, writeFile } from 'fs/promises';
 import merge from 'lodash.merge';
 import ora from 'ora';
 import { dirname, join, resolve } from 'path';
@@ -25,6 +25,12 @@ export async function createProject(argv) {
   spinner.start('Generating root files...');
   await copyTemplate(templateFolder, 'base', projectFolder);
   spinner.succeed('Generated root files.');
+
+  // Copy gitingore from template, because .npmignore removes it otherwise
+  await writeFile(
+    join(projectFolder, '.gitignore'),
+    await readFile(new URL('../templates/template.gitignore', import.meta.url)),
+  );
 
   // load package.json template, and modify it as we go.
   let packageJson = {

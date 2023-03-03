@@ -25,7 +25,6 @@ For an example of a generated project you can look at
 
 - Strict TypeScript configuration
 - Compiled and bundled with [esbuild](https://esbuild.github.io/)
-- EditorConfig
 - Commitizen (`-c`)
 - ESLint (`-l`)
 - Prettier (`-p`)

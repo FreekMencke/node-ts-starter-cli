@@ -1,3 +1,8 @@
+# 0.2.4 (2023-03-03)
+
+- Fixed a bug causing `.gitignore` not to be bundled with the package.
+- Removed `.editorconfig` since it was kind of redundant with `eslint` and `prettier`.
+
 # 0.2.0
 
 - Updated dependencies to latest version.
