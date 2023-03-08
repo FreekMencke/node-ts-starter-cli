@@ -18,7 +18,7 @@ npx node-ts-starter-cli create your-project-name -M
 
 The command will generate your project in the `./your-project-name/` folder.
 
-For an example of a generated project you can look at the [example](/example).
+For an example of a generated project you can look at the [example](https://github.com/FreekMencke/node-ts-starter-cli/tree/master/example).
 
 ## Features
 
