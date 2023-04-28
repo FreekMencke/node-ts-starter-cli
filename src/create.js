@@ -109,11 +109,6 @@ export async function createProject(argv) {
   if (argv.maximal || argv.githubAction) {
     spinner.start('Adding github-action...');
 
-    if (argv.maximal || (argv.eslint && argv.prettier))
-      await copyTemplate(templateFolder, 'docker/prettier-eslint', projectFolder);
-    else if (argv.eslint) await copyTemplate(templateFolder, 'docker/eslint', projectFolder);
-    else if (argv.prettier) await copyTemplate(templateFolder, 'docker/prettier', projectFolder);
-
     const githubActionTemplate = (() => {
       if (argv.maximal || argv.docker) return 'docker';
       if (argv.eslint && argv.prettier) return 'prettier-eslint';
