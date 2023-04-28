@@ -1,3 +1,7 @@
+# 0.2.5 (2023-04-28)
+
+- Fixed a bug causing docker files to be generated when using the `github-action` flag.
+
 # 0.2.4 (2023-03-03)
 
 - Fixed a bug causing `.gitignore` not to be bundled with the package.
