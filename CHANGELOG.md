@@ -1,3 +1,10 @@
+# 0.3.0
+
+- Updated dependencies to the most recent version.
+- Renamed `template-package.json` files to `package.json` to remain closer to the standard.
+- Moved old `template-package.json` files to their respective sub folder, ex `/default`.
+- Changed `copyTemplate` to ignore `package.json` files, so they won't get copied accidentally.
+
 # 0.2.5 (2023-04-28)
 
 - Fixed a bug causing docker files to be generated when using the `github-action` flag.
