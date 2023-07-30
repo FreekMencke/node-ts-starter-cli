@@ -34,7 +34,7 @@ export async function createProject(argv) {
 
   // load package.json template, and modify it as we go.
   let packageJson = {
-    ...(await importJSON(new URL('../templates/template-package.json', import.meta.url))),
+    ...(await importJSON(new URL('../templates/package.json', import.meta.url))),
     name: argv.name,
   };
 
@@ -53,7 +53,7 @@ export async function createProject(argv) {
   ]);
   spinner.succeed('Generated project files');
 
-  // copy linting files & template-package.json
+  // copy linting files & package.json
   if (argv.maximal || argv.eslint) {
     spinner.start('Adding linting...');
 
@@ -67,7 +67,7 @@ export async function createProject(argv) {
       packageJson,
       await importJSON(
         new URL(
-          `../templates/eslint/${argv.maximal || argv.prettier ? 'prettier-' : ''}template-package.json`,
+          `../templates/eslint/${argv.maximal || argv.prettier ? 'prettier' : 'default'}/package.json`,
           import.meta.url,
         ),
       ),
@@ -75,7 +75,7 @@ export async function createProject(argv) {
     spinner.succeed('Added linting.');
   }
 
-  // copy linting files & template-package.json
+  // copy linting files & package.json
   if (argv.maximal || argv.prettier) {
     spinner.start('Adding prettier...');
 
@@ -83,12 +83,12 @@ export async function createProject(argv) {
 
     packageJson = merge(
       packageJson,
-      await importJSON(new URL('../templates/prettier/template-package.json', import.meta.url)),
+      await importJSON(new URL('../templates/prettier/default/package.json', import.meta.url)),
     );
     spinner.succeed('Added prettier.');
   }
 
-  // copy docker files && template-package.json
+  // copy docker files && package.json
   if (argv.maximal || argv.docker) {
     spinner.start('Adding Docker...');
 
@@ -100,7 +100,7 @@ export async function createProject(argv) {
 
     packageJson = merge(
       packageJson,
-      await importJSON(new URL('../templates/docker/template-package.json', import.meta.url)),
+      await importJSON(new URL('../templates/docker/default/package.json', import.meta.url)),
     );
     spinner.succeed('Added Docker.');
   }
@@ -125,13 +125,13 @@ export async function createProject(argv) {
     spinner.succeed('Added github-action.');
   }
 
-  // copy commitizen template-package.json
+  // copy commitizen package.json
   if (argv.maximal || argv.commitizen) {
     spinner.start('Adding commitizen...');
 
     packageJson = merge(
       packageJson,
-      await importJSON(new URL('../templates/commitizen/template-package.json', import.meta.url)),
+      await importJSON(new URL('../templates/commitizen/package.json', import.meta.url)),
     );
     spinner.succeed('Added commitizen.');
   }
