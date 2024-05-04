@@ -1,4 +1,8 @@
-# 0.4.0 (2023-07-30)
+# 0.4.1 (2024-05-04)
+
+- fix problem with eslint config
+
+# 0.4.0 (2024-05-04)
 
 - Updated dependencies to latest version.
 - Upped required node version to `>=18.18.0`.
