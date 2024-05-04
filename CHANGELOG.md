@@ -1,5 +1,10 @@
 # 0.3.1 (2023-07-30)
 
+- Updated dependencies to latest version.
+- Upped required node version to `>=18.0.0`.
+
+# 0.3.1 (2023-07-30)
+
 - Created the `task.js` util to optimize code, and make it easier to add new features in the future.
 
 # 0.3.0 (2023-07-30)
