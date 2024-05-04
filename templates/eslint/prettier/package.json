@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "lint": "eslint . -c config.eslint.mjs"
+    "lint": "eslint ."
   },
   "devDependencies": {
     "typescript-eslint": "^7.8.0",

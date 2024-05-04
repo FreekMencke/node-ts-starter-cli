@@ -3,7 +3,7 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config({
-  files: ['**/*.js', '**/*.ts'],
+  files: ['**/*.{js,cjs,mjs}', '**/*.ts'],
   ignores: ['dist', 'node_modules', '.vscode'],
   extends: [prettier],
   languageOptions: {
