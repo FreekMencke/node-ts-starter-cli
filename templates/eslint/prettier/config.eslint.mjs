@@ -1,15 +1,21 @@
-module.exports = {
-  root: true,
-  env: {
-    es2022: true,
-    node: true,
-  },
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    project: ['tsconfig.json', 'tsconfig.eslint.json'],
+import prettier from 'eslint-config-prettier';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
+
+export default tseslint.config({
+  files: ['**/*.js', '**/*.ts'],
+  ignores: ['dist', 'node_modules', '.vscode'],
+  extends: [prettier],
+  languageOptions: {
+    ecmaVersion: 'latest',
     sourceType: 'module',
+    globals: globals.node,
+    parser: tseslint.parser,
+    parserOptions: {
+      project: ['tsconfig.json', 'tsconfig.eslint.json'],
+    },
   },
-  plugins: ['@typescript-eslint'],
+  plugins: { '@typescript-eslint': tseslint.plugin },
   rules: {
     '@typescript-eslint/indent': ['error', 2],
     '@typescript-eslint/member-delimiter-style': [
@@ -41,4 +47,4 @@ module.exports = {
     'no-return-await': 'error',
     'prefer-const': 'error',
   },
-};
+});

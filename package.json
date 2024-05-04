@@ -26,7 +26,7 @@
   },
   "scripts": {
     "cz": "git cz",
-    "lint": "eslint . -c .eslintrc",
+    "lint": "eslint .",
     "prettier": "prettier --write .",
     "prettier:ci": "prettier --check .",
     "pretest-run": "rm -rf ./example",
@@ -54,11 +54,11 @@
   "devDependencies": {
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^8.10.0",
+    "eslint": "^9.2.0",
+    "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.2.5"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.18.0"
   }
 }

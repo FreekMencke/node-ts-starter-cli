@@ -11,5 +11,5 @@
     "typeRoots": ["node_modules/@types"],
     "useDefineForClassFields": false
   },
-  "include": ["src/main.ts"]
+  "include": ["src/main.ts", "src/**/*.d.ts"]
 }

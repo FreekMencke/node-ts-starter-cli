@@ -1,6 +1,0 @@
-dist
-node_modules
-.vscode
-
-/example/
-/templates/eslint

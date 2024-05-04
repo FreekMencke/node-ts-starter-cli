@@ -1,7 +1,8 @@
-# 0.3.1 (2023-07-30)
+# 0.4.0 (2023-07-30)
 
 - Updated dependencies to latest version.
 - Upped required node version to `>=18.0.0`.
+- Migrated to ESlint flat config.
 
 # 0.3.1 (2023-07-30)
 
