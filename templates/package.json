@@ -12,7 +12,7 @@
     "build:meta:prod": "node ./build/esbuild.js --meta"
   },
   "devDependencies": {
-    "@es-exec/esbuild-plugin-start": "^0.0.5",
+    "@es-exec/esbuild-plugin-serve": "^0.0.5",
     "@types/node": "^18.19.31",
     "esbuild": "^0.20.2",
     "minimist": "^1.2.8",

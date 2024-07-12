@@ -36,7 +36,7 @@ const config = {
   ...(argv.dev ? devConfig : prodConfig),
 };
 
-if (argv.run) config.plugins.push(require('@es-exec/esbuild-plugin-start').default({ script: 'node dist/main.js' }));
+if (argv.run) config.plugins.push(require('@es-exec/esbuild-plugin-serve').default());
 
 if (argv.watch) {
   (async () => {

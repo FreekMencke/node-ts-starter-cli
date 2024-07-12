@@ -10,7 +10,7 @@
     "cz": "git cz",
     "docker:build": "docker build --rm -t example:latest .",
     "docker:deploy": "sh ./scripts/deploy.sh",
-    "lint": "eslint . -c config.eslint.mjs",
+    "lint": "eslint .",
     "prettier": "prettier --write .",
     "prettier:ci": "prettier --check .",
     "start": "node ./build/esbuild.js --dev --watch --run",
@@ -24,7 +24,7 @@
   },
   "prettier": "./.prettierrc.json",
   "devDependencies": {
-    "@es-exec/esbuild-plugin-start": "^0.0.5",
+    "@es-exec/esbuild-plugin-serve": "^0.0.5",
     "@types/node": "^18.19.31",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
@@ -35,5 +35,8 @@
     "prettier": "^3.2.5",
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.8.0"
+  },
+  "engines": {
+    "node": ">=18.18.0"
   }
 }
