@@ -1,3 +1,12 @@
+# 0.4.3 (2024-07-12)
+
+- Use new esbuild plugin `@es-exec/esbuild-plugin-serve` to serve dist/ to prevent an issue with servers, ex. `fastify`.
+- fixed an issue with eslint config not respecting the ignored folders.
+
+# ~~0.4.2 (2024-07-12)~~
+
+~~issue with publishing~~
+
 # 0.4.1 (2024-05-04)
 
 - fix problem with eslint config
