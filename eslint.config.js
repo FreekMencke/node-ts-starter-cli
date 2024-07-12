@@ -4,6 +4,9 @@ import globals from 'globals';
 export default [
   prettier,
   {
+    ignores: ['example/', 'templates/eslint/'],
+  },
+  {
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
@@ -19,6 +22,5 @@ export default [
       'prefer-const': 'error',
       'semi': ['error', 'always'],
     },
-    ignores: ['dist', 'node_modules', '.vscode', '/example/', '/templates/eslint'],
   },
 ];
