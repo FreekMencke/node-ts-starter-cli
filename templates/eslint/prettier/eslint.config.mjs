@@ -4,7 +4,7 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['/dist', 'node_modules', '.vscode'],
+    ignores: ['node_modules', '.vscode', 'dist/'],
   },
   {
     files: ['**/*.{js,cjs,mjs}', '**/*.ts'],
