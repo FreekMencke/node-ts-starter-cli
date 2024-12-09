@@ -1,13 +1,57 @@
+import stylistic from '@stylistic/eslint-plugin';
 import prettier from 'eslint-config-prettier';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+
+const rules = {
+  '@stylistic/indent': ['error', 2],
+  '@stylistic/member-delimiter-style': [
+    'error',
+    {
+      multiline: {
+        delimiter: 'semi',
+        requireLast: true,
+      },
+      singleline: {
+        delimiter: 'semi',
+        requireLast: false,
+      },
+    },
+  ],
+  '@stylistic/quotes': [
+    'error',
+    'single',
+    {
+      avoidEscape: true,
+    },
+  ],
+  '@stylistic/semi': ['error', 'always'],
+  'comma-dangle': ['error', 'always-multiline'],
+  'max-classes-per-file': 'off',
+  'no-console': 'error',
+  'no-multiple-empty-lines': ['error', { max: 1 }],
+  'no-redeclare': 'error',
+  'no-return-await': 'error',
+  'prefer-const': 'error',
+};
 
 export default tseslint.config(
   {
     ignores: ['node_modules', '.vscode', 'dist/'],
   },
   {
-    files: ['**/*.{js,cjs,mjs}', '**/*.ts'],
+    files: ['**/*.{js,cjs,mjs}'],
+    extends: [prettier],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: globals.node,
+    },
+    plugins: { '@stylistic': stylistic },
+    rules: rules,
+  },
+  {
+    files: ['**/*.ts'],
     extends: [prettier],
     languageOptions: {
       ecmaVersion: 'latest',
@@ -18,37 +62,7 @@ export default tseslint.config(
         project: ['tsconfig.json', 'tsconfig.eslint.json'],
       },
     },
-    plugins: { '@typescript-eslint': tseslint.plugin },
-    rules: {
-      '@typescript-eslint/indent': ['error', 2],
-      '@typescript-eslint/member-delimiter-style': [
-        'error',
-        {
-          multiline: {
-            delimiter: 'semi',
-            requireLast: true,
-          },
-          singleline: {
-            delimiter: 'semi',
-            requireLast: false,
-          },
-        },
-      ],
-      '@typescript-eslint/quotes': [
-        'error',
-        'single',
-        {
-          avoidEscape: true,
-        },
-      ],
-      '@typescript-eslint/semi': ['error', 'always'],
-      'comma-dangle': ['error', 'always-multiline'],
-      'max-classes-per-file': 'off',
-      'no-console': 'error',
-      'no-multiple-empty-lines': ['error', { max: 1 }],
-      'no-redeclare': 'error',
-      'no-return-await': 'error',
-      'prefer-const': 'error',
-    },
+    plugins: { '@stylistic': stylistic },
+    rules: rules,
   },
 );
