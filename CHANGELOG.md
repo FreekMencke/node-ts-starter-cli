@@ -1,3 +1,8 @@
+# 0.5.0 (2024-12-09)
+
+- Update all dependencies.
+- Use `@stylistic` for linting and formatting because of deprecated `typescript-eslint` rules.
+
 # 0.4.3 (2024-07-12)
 
 - Use new esbuild plugin `@es-exec/esbuild-plugin-serve` to serve dist/ to prevent an issue with servers, ex. `fastify`.
