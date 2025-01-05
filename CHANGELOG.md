@@ -1,3 +1,7 @@
+# 0.5.1 (2025-01-05)
+
+- Remove a reference to `prettier` in the default `eslint` config.
+
 # 0.5.0 (2024-12-09)
 
 - Update all dependencies.

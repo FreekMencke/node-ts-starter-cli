@@ -1,5 +1,4 @@
 import stylistic from '@stylistic/eslint-plugin';
-import prettier from 'eslint-config-prettier';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
@@ -51,7 +50,6 @@ export default tseslint.config(
   },
   {
     files: ['**/*.ts'],
-    extends: [prettier],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
