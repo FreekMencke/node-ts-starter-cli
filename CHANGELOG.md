@@ -1,3 +1,7 @@
+# 0.5.2 (2025-01-10)
+
+- Extracted duplicate code to `template.js` utils for better code quality.
+
 # 0.5.1 (2025-01-05)
 
 - Remove a reference to `prettier` in the default `eslint` config.

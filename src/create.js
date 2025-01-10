@@ -1,16 +1,13 @@
 import { exec } from 'child_process';
-import { mkdir, readFile, writeFile } from 'fs/promises';
-import merge from 'lodash.merge';
-import { dirname, join, resolve } from 'path';
+import { mkdir, writeFile } from 'fs/promises';
+import { join, resolve } from 'path';
 import sortPackageJson from 'sort-package-json';
-import { fileURLToPath } from 'url';
 import { promisify } from 'util';
-import { copyTemplate } from './utils/copy.js';
-import { importJSON } from './utils/json.js';
+import { mergePackageJson } from './utils/json.js';
 import { task } from './utils/task.js';
+import { copyTemplate, readTemplate } from './utils/template.js';
 
 export async function createProject(argv) {
-  const templateFolder = join(dirname(fileURLToPath(import.meta.url)), '../templates');
   const projectFolder = resolve(process.cwd(), argv.name);
 
   console.log(`\nGenerating new project with name "${argv.name}"...\n`);
@@ -18,22 +15,13 @@ export async function createProject(argv) {
   // #region Preparing project folder
 
   await task('Creating folder...', 'Created folder.', () => mkdir(projectFolder));
-
-  await task('Generating root files...', 'Generated root files.', () =>
-    copyTemplate(templateFolder, 'base', projectFolder),
-  );
+  await task('Generating root files...', 'Generated root files.', () => copyTemplate('base', projectFolder));
 
   // Copy gitingore from template, because .npmignore removes it otherwise
-  await writeFile(
-    join(projectFolder, '.gitignore'),
-    await readFile(new URL('../templates/template.gitignore', import.meta.url)),
-  );
+  await writeFile(join(projectFolder, '.gitignore'), await readTemplate('template.gitignore'));
 
   // load the base package.json template, and modify it as we go.
-  let packageJson = {
-    ...(await importJSON(new URL('../templates/package.json', import.meta.url))),
-    name: argv.name,
-  };
+  let packageJson = { ...JSON.parse(await readTemplate('package.json')), name: argv.name };
 
   await task('Generating project files...', 'Generated project files.', async () => {
     const buildSrcTemplate = (() => {
@@ -43,8 +31,8 @@ export async function createProject(argv) {
     })();
 
     return Promise.all([
-      await copyTemplate(templateFolder, `build/${buildSrcTemplate}`, join(projectFolder, 'build')),
-      await copyTemplate(templateFolder, `src/${buildSrcTemplate}`, join(projectFolder, 'src')),
+      copyTemplate(`build/${buildSrcTemplate}`, join(projectFolder, 'build')),
+      copyTemplate(`src/${buildSrcTemplate}`, join(projectFolder, 'src')),
     ]);
   });
 
@@ -54,52 +42,39 @@ export async function createProject(argv) {
 
   if (argv.maximal || argv.eslint) {
     await task('Adding linting...', 'Added linting.', async () => {
-      await copyTemplate(
-        templateFolder,
-        argv.maximal || argv.prettier ? 'eslint/prettier' : 'eslint/default',
-        projectFolder,
-      );
+      const eslintTemplate = argv.maximal || argv.prettier ? 'prettier' : 'default';
 
-      packageJson = merge(
-        packageJson,
-        await importJSON(
-          new URL(
-            `../templates/eslint/${argv.maximal || argv.prettier ? 'prettier' : 'default'}/package.json`,
-            import.meta.url,
-          ),
-        ),
-      );
+      await copyTemplate(`eslint/${eslintTemplate}`, projectFolder);
+
+      packageJson = await mergePackageJson(packageJson, `eslint/${eslintTemplate}/package.json`);
     });
   }
 
   if (argv.maximal || argv.prettier) {
     await task('Adding prettier...', 'Added prettier.', async () => {
-      await copyTemplate(templateFolder, 'prettier/default', projectFolder);
+      await copyTemplate('prettier/default', projectFolder);
 
-      packageJson = merge(
-        packageJson,
-        await importJSON(new URL('../templates/prettier/default/package.json', import.meta.url)),
-      );
+      packageJson = await mergePackageJson(packageJson, 'prettier/default/package.json');
     });
   }
 
   if (argv.maximal || argv.docker) {
     await task('Adding Docker...', 'Added Docker.', async () => {
-      if (argv.maximal || (argv.eslint && argv.prettier))
-        await copyTemplate(templateFolder, 'docker/prettier-eslint', projectFolder);
-      else if (argv.eslint) await copyTemplate(templateFolder, 'docker/eslint', projectFolder);
-      else if (argv.prettier) await copyTemplate(templateFolder, 'docker/prettier', projectFolder);
-      else await copyTemplate(templateFolder, 'docker/default', projectFolder);
+      const dockerTemplate = (() => {
+        if (argv.maximal || (argv.eslint && argv.prettier)) return 'docker/prettier-eslint';
+        if (argv.eslint) return 'docker/eslint';
+        if (argv.prettier) return 'docker/prettier';
+        return 'docker/default';
+      })();
 
-      packageJson = merge(
-        packageJson,
-        await importJSON(new URL('../templates/docker/default/package.json', import.meta.url)),
-      );
+      await copyTemplate(dockerTemplate, projectFolder);
+
+      packageJson = await mergePackageJson(packageJson, 'docker/default/package.json');
     });
   }
 
   if (argv.maximal || argv.githubAction) {
-    await task('Adding github-action...', 'Added github-action.', async () => {
+    await task('Adding github-action...', 'Added github-action.', () => {
       const githubActionTemplate = (() => {
         if (argv.maximal || argv.docker) return 'docker';
         if (argv.eslint && argv.prettier) return 'prettier-eslint';
@@ -108,20 +83,13 @@ export async function createProject(argv) {
         return 'default';
       })();
 
-      return copyTemplate(
-        templateFolder,
-        `github-action/${githubActionTemplate}`,
-        join(projectFolder, '.github/workflows'),
-      );
+      return copyTemplate(`github-action/${githubActionTemplate}`, projectFolder);
     });
   }
 
   if (argv.maximal || argv.commitizen) {
     await task('Adding commitizen...', 'Added commitizen.', async () => {
-      packageJson = merge(
-        packageJson,
-        await importJSON(new URL('../templates/commitizen/package.json', import.meta.url)),
-      );
+      packageJson = await mergePackageJson(packageJson, 'commitizen/package.json');
     });
   }
 
@@ -129,13 +97,14 @@ export async function createProject(argv) {
 
   // #region finalizing project folder and installing dependencies
 
-  await task('Generating package.json...', 'Generated package.json.', () =>
-    writeFile(
-      // Write our modified package.json template to our project folder
-      join(projectFolder, 'package.json'),
-      JSON.stringify(sortPackageJson(packageJson), null, 2).replaceAll(/\$npm_package_name/g, packageJson.name) + '\n', // \n required for prettier
-    ),
-  );
+  await task('Generating package.json...', 'Generated package.json.', () => {
+    // Sort and stringify final package.json and add a newline at the end to comply with prettier validation
+    let packageJsonString = JSON.stringify(sortPackageJson(packageJson), null, 2) + '\n';
+    // Replace the template variable `$npm_package_name` with the actual name of the project
+    packageJsonString = packageJsonString.replaceAll(/\$npm_package_name/g, packageJson.name);
+
+    return writeFile(join(projectFolder, 'package.json'), packageJsonString);
+  });
 
   await task('Initializing git repository...', null, async (ora) => {
     const { stdout } = await promisify(exec)('git init', { cwd: projectFolder });
